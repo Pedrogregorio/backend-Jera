@@ -22,7 +22,6 @@ router.post('/registro', async (req, res)=>{
 
 router.post('/autenticacao', async (req, res)=>{
     const { email, senha } = req.body
-
     const user = await Usuario.findOne({ email }).select('+senha')
     if(!user){
         return res.status(400).send({ erro: 'Usuario nao encontrado' })
