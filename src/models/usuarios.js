@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     nascimento:{
         type: String,
         required: true
-    }
+    },
 })
 userSchema.pre('save', async function(next) {
     const hash = await bcrypt.hash(this.senha, 10)
