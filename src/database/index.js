@@ -7,7 +7,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true)
 
 //estabelecendo a conexao
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect('mongodb://localhost/jera')
 
 
 

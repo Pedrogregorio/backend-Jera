@@ -14,4 +14,4 @@ require('./controllers/autenticacao')(app)
 require('./controllers/projeto')(app)
 
 //colocando o app para rodar na porta 3000
-app.listen(process.env.PORT || 3000)
+app.listen(3000)
