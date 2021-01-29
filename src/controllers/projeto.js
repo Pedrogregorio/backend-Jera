@@ -1,18 +1,11 @@
 const express = require('express')
 const axios = require('axios')
-const expressSession = require('express-session')
 const Usuario = require('../models/usuarios')
 const Filmes = require('../models/filmesSalvos')
 const Perfil = require('../models/perfil')
+
 const router = express.Router()
 const middlewereAutenticate = require('../middlewares/auth')
-const { isValidObjectId } = require('mongoose')
-
-router.use(expressSession({
-    secret: '04259a2b4584100b53697b0fc14fdfad',
-    saveUninitialized: true,
-    resave: false
-}))
 router.use(middlewereAutenticate)
 
 router.get('/inicio', async (req, res) => {
