@@ -10,7 +10,6 @@ router.use(middlewereAutenticate)
 
 router.get('/inicio', async (req, res) => {
     try {
-        // console.log(req)
         const API_KEY = 'c03905120d6d5938545433512416b962'
         const BASE_URL = 'https://api.themoviedb.org/3/'
         //extraindo os dados da api
@@ -21,11 +20,6 @@ router.get('/inicio', async (req, res) => {
     }
 })
 
-// router.post('/setPerfil', (req, res)=>{
-//     console.log(req.body.perfil)
-//     req.session.perfilId = req.body.perfil
-//     res.json({perfil: req.perfilId})
-// })
 router.post('/salvando', async (req, res)=>{
     const filme = String(req.body.filmes)
     const perfil = String(req.body.perfil)
@@ -56,13 +50,21 @@ router.post('/cria_perfil', async (req, res) => {
     }
 })
 
+router.post('/deletePerfil', async (req, res)=>{
+    try {
+        const id = req.body.id
+        const resposta = await Perfil.deleteOne({id_dono: req.userId, _id: id})
+        return resposta
+    } catch (error) {
+        return {erro: 'Nao foi possivel deletar'}
+    }
+})
+
 router.post('/lista', async (req, res) =>{
     try {
         const perfil = req.body.perfil
         let filmes = []
         const API_KEY = 'c03905120d6d5938545433512416b962'
-        console.log(req)
-        console.log(perfil)
         const resposta = await Filmes.find({perfil: perfil})
         for (let i = 0; i < resposta.length; i++) {
             const { data } = await axios("https://api.themoviedb.org/3/movie/"+ resposta[i].filmes +"?api_key="+API_KEY)   
