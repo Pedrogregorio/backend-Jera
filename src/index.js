@@ -9,6 +9,8 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
+app.set('trust proxy', 1)
+
 //referenciano os controllers
 require('./controllers/autenticacao')(app)
 require('./controllers/projeto')(app)
