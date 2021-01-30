@@ -35,6 +35,23 @@ router.post('/salvando', async (req, res)=>{
     }
 })
 
+router.post('/assistido', async (req, res)=>{
+    const filme = String(req.body.filmes)
+    const perfil = String(req.body.perfil)
+    console.log('Chegamos')
+    const query = {perfil: perfil, filmes: filme, assistido: true}
+    try {
+        if(await Filmes.findOne(query)){
+            return res.json({ erro: 'O filme ja foi assitido' })
+        }
+        const resposta = await Filmes.updateOne({perfil:perfil, filmes:filme}, query)
+        console.log(resposta)
+        return resposta
+    } catch (error) {
+        return res.json({erro: 'Nao foi possivel Adicionar á lista'})
+    }
+})
+
 router.post('/cria_perfil', async (req, res) => {
     try {
         const nome = req.body.nome
@@ -53,8 +70,9 @@ router.post('/cria_perfil', async (req, res) => {
 router.post('/deletePerfil', async (req, res)=>{
     try {
         const id = req.body.id
+        const teste = await Filmes.deleteMany({perfil: String(id)})
         const resposta = await Perfil.deleteOne({id_dono: req.userId, _id: id})
-        return resposta
+        return resposta, teste
     } catch (error) {
         return {erro: 'Nao foi possivel deletar'}
     }
@@ -68,6 +86,9 @@ router.post('/lista', async (req, res) =>{
         const resposta = await Filmes.find({perfil: perfil})
         for (let i = 0; i < resposta.length; i++) {
             const { data } = await axios("https://api.themoviedb.org/3/movie/"+ resposta[i].filmes +"?api_key="+API_KEY)   
+            if(resposta[i].assistido == true){
+                data.assistido = true
+            }
             filmes[i] = data
         }
         return res.json(filmes)

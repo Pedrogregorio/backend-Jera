@@ -6,6 +6,9 @@ const filmesSchema = new mongoose.Schema({
     },
     filmes: {
         type: String
+    },
+    assistido:{
+        type:Boolean
     }
 })
 
