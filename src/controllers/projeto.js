@@ -35,18 +35,17 @@ router.post('/salvando', async (req, res)=>{
     }
 })
 
-router.post('/assistido', async (req, res)=>{
+router.put('/assistido', async (req, res)=>{
     const filme = String(req.body.filmes)
     const perfil = String(req.body.perfil)
-    console.log('Chegamos')
     const query = {perfil: perfil, filmes: filme, assistido: true}
     try {
         if(await Filmes.findOne(query)){
             return res.json({ erro: 'O filme ja foi assitido' })
         }
         const resposta = await Filmes.updateOne({perfil:perfil, filmes:filme}, query)
-        console.log(resposta)
-        return resposta
+        
+        return res.json({resposta:resposta, status: 'atualizado'})
     } catch (error) {
         return res.json({erro: 'Nao foi possivel Adicionar á lista'})
     }
@@ -67,12 +66,12 @@ router.post('/cria_perfil', async (req, res) => {
     }
 })
 
-router.post('/deletePerfil', async (req, res)=>{
+router.delete('/deletePerfil', async (req, res)=>{
     try {
         const id = req.body.id
         const teste = await Filmes.deleteMany({perfil: String(id)})
         const resposta = await Perfil.deleteOne({id_dono: req.userId, _id: id})
-        return resposta, teste
+        return res.json({respostar:resposta, teste:teste, status: 'ok'})
     } catch (error) {
         return {erro: 'Nao foi possivel deletar'}
     }
