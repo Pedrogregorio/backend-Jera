@@ -7,8 +7,8 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true)
 
 //estabelecendo a conexao
-// mongoose.connect('mongodb+srv://jera:desafiojera@cluster0.uixui.mongodb.net/desafio_jera?retryWrites=true&w=majority')
-mongoose.connect('mongodb://localhost/jera')
+mongoose.connect('mongodb+srv://jera:desafiojera@cluster0.uixui.mongodb.net/desafio_jera?retryWrites=true&w=majority')
+// mongoose.connect('mongodb://localhost/jera')
 
 
 
